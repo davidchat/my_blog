@@ -10,6 +10,31 @@
 		    </div>
 		    <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
 		    <p class="article-content">{{ post.content }}</p>
+		    <div class="border-top border-bottom pt-2 pb-2">
+			    <h5 class="ml-2">Comments</h5>
+			    {% if not post.comments.all %}
+			    	<small class="text-muted">No comments yet... <a href="{% url 'comment-create' post.id %}">Add a comment</a></small>
+			    {% else %}
+			    	<div class="border-top border-bottom pt-2 pl-2 pr-2 pb-3 bg-light">
+			    	{% for comment in post.comments.all %}
+			    			<a href="{% url 'user-posts' comment.author.username %}">{{ comment.author }}</a>
+			    			<small class="text-muted">{{ comment.date_added|date:"F, j, Y: g:i" }}</small>
+			    			{% if comment.author == user %}
+	      						<div>
+	      							<a class="btn btn-outline-secondary btn-sm mt-1 mb-1" href="{% url 'comment-update' comment.id %}">Update</a>
+	      							<a class="btn btn-outline-danger btn-sm mt-1 mb-1" href="{% url 'comment-delete' comment.id %}">Delete</a>
+	      						</div>
+	      					{% endif %}
+			    			<br />
+			    			{{ comment.body }}
+			    			{% if not forloop.last %}
+			    				<hr>
+			    			{% endif %}
+			    	{% endfor %}
+			    	</div>
+			    	<small class="text-muted ml-2"><a href="{% url 'comment-create' post.id %}">Add a new comment</a></small>
+			    {% endif %}
+			</div>
 		  </div>
 		</article>
 	{% endfor %}

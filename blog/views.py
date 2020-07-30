@@ -9,12 +9,12 @@ from django.views.generic import (
 	DeleteView,
 )
 
-from .models import Post
+from .models import Post, Comment
 
 
-def home(request):
-	context = {'posts': Post.objects.all()}
-	return render(request, 'blog/home.html', context)
+# def home(request):
+# 	context = {'posts': Post.objects.all()}
+# 	return render(request, 'blog/home.html', context)
 
 
 class PostListView(ListView):
@@ -59,6 +59,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 	model = Post
 	fields = ['title', 'content']
+	template_name = 'blog/comment_form.html'
 
 	# Override default form_valid function to add author field
 	def form_valid(self, form):
@@ -86,5 +87,48 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 		return False
 
 
+class CommentCreateView(LoginRequiredMixin, CreateView):
+	model = Comment
+	fields = ['body']
+
+	# Override default form_valid function to add author field
+	def form_valid(self, form):
+		# Author is set automatically to current user
+		form.instance.author = self.request.user
+		form.instance.post_id = self.kwargs['pk']
+		return super().form_valid(form)
+
+
+class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+	model = Comment
+	fields = ['body']
+
+	# Override default form_valid function to add author field
+	def form_valid(self, form):
+		# Author is set automatically to current user
+		return super().form_valid(form)
+
+	def test_func(self):
+		# Get the current comment
+		comment = self.get_object()
+		if self.request.user == comment.author:
+			return True
+		return False
+
+
+class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+	model = Comment
+	success_url = '/'
+
+	def test_func(self):
+		# Get the current comment
+		comment = self.get_object()
+		if self.request.user == comment.author:
+			return True
+		return False
+
+
 def about(request):
 	return render(request, 'blog/about.html', {'title': 'About'})
+
+
