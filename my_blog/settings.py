@@ -36,6 +36,8 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     # 3rd pary apps
     'crispy_forms',
+    'ckeditor',
+    'ckeditor_uploader',
     # Django apps
     'django_cleanup',
     'django.contrib.admin',
@@ -125,11 +127,33 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+CKEDITOR_CONFIGS = {
+    'default': {
+       # 'toolbar_Full': [
+        'toolbar': 'Custom',
+        'toolbar_Custom': [
+            ['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
+            ['Bold', 'Italic', 'Underline'],
+            ['TextColor', 'BGColor'],
+            ['Smiley', 'SpecialChar'],
+            ['NumberedList','BulletedList'],
+            ['CodeSnippet', 'Image', 'Youtube'],
+        ],
+        'height': '100%',
+        'width': '100%',
+        'toolbarCanCollapse': True,
+        'extraPlugins': 'justify,liststyle,codesnippet,youtube'
+    },
+}
+
+CKEDITOR_UPLOAD_PATH = 'uploads/'
 
 LOGIN_REDIRECT_URL = 'blog-home'
 LOGIN_URL = 'login'
