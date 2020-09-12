@@ -59,7 +59,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 	model = Post
 	fields = ['title', 'content']
-	template_name = 'blog/comment_form.html'
+	template_name = 'blog/post_form.html'
 
 	# Override default form_valid function to add author field
 	def form_valid(self, form):
