@@ -5,7 +5,7 @@
 		  <div class="card card-body">
 			  <div class="media-body">
 			    <div class="article-metadata">
-			      <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
+			      <a class="mr-2 red-link" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
 			      <small class="text-muted">{{ post.date_posted|date:"F j, Y" }}</small>
 			      {% if post.author == user %}
 	      						<div>
@@ -22,11 +22,11 @@
 		  <div class="media-body">
 			    <h5>Comments</h5>
 			    {% if not post.comments.all %}
-			    	<small class="text-muted">No comments yet... <a href="{% url 'comment-create' post.id %}">Add a comment</a></small>
+			    	<small class="text-muted">No comments yet... <a class="red-link" href="{% url 'comment-create' post.id %}">Add a comment</a></small>
 			    {% else %}
 			    	<div class="border-top border-bottom pt-2 pl-2 pr-2 pb-3 bg-light">
 			    	{% for comment in post.comments.all %}
-			    			<a href="{% url 'user-posts' comment.author.username %}">{{ comment.author }}</a>
+			    			<a class="red-link" href="{% url 'user-posts' comment.author.username %}">{{ comment.author }}</a>
 			    			<small class="text-muted">{{ comment.date_added|date:"F, j, Y: g:i" }}</small>
 			    			{% if comment.author == user %}
 	      						<div>
@@ -41,7 +41,7 @@
 			    			{% endif %}
 			    	{% endfor %}
 			    	</div>
-			    	<small class="text-muted ml-2"><a href="{% url 'comment-create' post.id %}">Add a new comment</a></small>
+			    	<small class="text-muted ml-2"><a class="red-link" href="{% url 'comment-create' post.id %}">Add a new comment</a></small>
 			    {% endif %}
 			</div>
 		  </div>
