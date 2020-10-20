@@ -24,9 +24,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = config('MY_BLOG_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['practicalitybeatspurity.com', 'www.practicalitybeatspurity.com']
+ALLOWED_HOSTS = ['practicalitybeatspurity.com', 'www.practicalitybeatspurity.com', 'localhost']
 
 
 # Application definition
@@ -148,7 +148,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')
 
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media_root')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
