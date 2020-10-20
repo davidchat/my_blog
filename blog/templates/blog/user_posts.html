@@ -3,48 +3,50 @@
 	<h1 class="mb-3">Posts by {{ view.kwargs.username }} ({{ page_obj.paginator.count }})</h1>
 	{% for post in posts %}
 	<div class="container">
-		<article class="content-section mt-4">
-			<div class="row">
-			<div class="col-lg">
-			<div class="card card-body w-100">
-			<div class="media-body">
-		    <div class="article-metadata">
-				<img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
-		      <a class="mr-2 red-link" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
-		      <small class="text-muted">{{ post.date_posted|date:"F j, Y" }}</small>
-		    </div>
-		    <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
-		    <p class="article-content">{{ post.content|safe }}</p>
-		    <div class="border-top border-bottom pt-2 pb-2">
-			    <h5 class="ml-2">Comments</h5>
-			    {% if not post.comments.all %}
-			    	<small class="text-muted">No comments yet... <a class="red-link" href="{% url 'comment-create' post.id %}">Add a comment</a></small>
-			    {% else %}
-			    	<div class="border-top border-bottom pt-2 pl-2 pr-2 pb-3 bg-light">
-			    	{% for comment in post.comments.all %}
-			    			<a class="red-link" href="{% url 'user-posts' comment.author.username %}">{{ comment.author }}</a>
-			    			<small class="text-muted">{{ comment.date_added|date:"F, j, Y: g:i" }}</small>
-			    			{% if comment.author == user %}
-	      						<div>
-	      							<a class="btn btn-outline-secondary btn-sm mt-1 mb-1" href="{% url 'comment-update' comment.id %}">Update</a>
-	      							<a class="btn btn-outline-danger btn-sm mt-1 mb-1" href="{% url 'comment-delete' comment.id %}">Delete</a>
-	      						</div>
-	      					{% endif %}
-			    			<br />
-			    			{{ comment.content|safe }}
-			    			{% if not forloop.last %}
-			    				<hr>
-			    			{% endif %}
-			    	{% endfor %}
-			    	</div>
-			    	<small class="text-muted ml-2"><a class="red-link" href="{% url 'comment-create' post.id %}">Add a new comment</a></small>
-			    {% endif %}
-			</div>
-		  	</div>
-		  	</div>
-		  </div>
-		</div>
-		</article>
+		<div class="row mt-4">
+			<div class="col-lg-8 mx-auto">
+				<article class="mt-4">
+					<div class="row">
+					<div class="col-lg">
+					<div class="card card-body w-100">
+					<div class="media-body">
+					<div class="article-metadata">
+						<img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
+					<a class="mr-2 red-link" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
+					<small class="text-muted">{{ post.date_posted|date:"F j, Y" }}</small>
+					</div>
+					<h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
+					<p class="article-content">{{ post.content|safe }}</p>
+					<div class="border-top border-bottom pt-2 pb-2">
+						<h5 class="">Comments</h5>
+						{% if not post.comments.all %}
+							<small class="text-muted">No comments yet... <a class="red-link" href="{% url 'comment-create' post.id %}">Add a comment</a></small>
+						{% else %}
+							<div class="border-top border-bottom pt-2 pl-2 pr-2 pb-3 bg-light">
+							{% for comment in post.comments.all %}
+									<a class="red-link" href="{% url 'user-posts' comment.author.username %}">{{ comment.author }}</a>
+									<small class="text-muted">{{ comment.date_added|date:"F, j, Y: g:i" }}</small>
+									{% if comment.author == user %}
+										<div>
+											<a class="btn btn-outline-secondary btn-sm mt-1 mb-1" href="{% url 'comment-update' comment.id %}">Update</a>
+											<a class="btn btn-outline-danger btn-sm mt-1 mb-1" href="{% url 'comment-delete' comment.id %}">Delete</a>
+										</div>
+									{% endif %}
+									<br />
+									{{ comment.content|safe }}
+									{% if not forloop.last %}
+										<hr>
+									{% endif %}
+							{% endfor %}
+							</div>
+							<small class="text-muted ml-2"><a class="red-link" href="{% url 'comment-create' post.id %}">Add a new comment</a></small>
+						{% endif %}
+					</div>
+					</div>
+					</div>
+				</div>
+				</div>
+				</article>
 	{% endfor %}
 	{% if is_paginated %}
 
