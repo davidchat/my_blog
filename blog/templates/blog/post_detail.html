@@ -1,5 +1,9 @@
 {% extends "blog/base.html" %}
 {% block content %}
+{% block title %}
+<title>{{ post.title }} - Practicality Beats Purity</title>
+{% endblock title %}
+
 <div class="container">
 	<div class="row mt-4">
 		<div class="col-lg-8 mx-auto">

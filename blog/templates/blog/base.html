@@ -12,11 +12,12 @@
 
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 
-    {% if title %}
+	{% block title %} {% endblock %}
+    <!-- {% if title %}
 		<title>{{ title }}</title>
 	{% else %}
 		<title>Practicality Beats Purity</title>
-	{% endif %}
+	{% endif %} -->
 </head>
 <body>
 	<header class="site-header">
