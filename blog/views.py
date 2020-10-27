@@ -1,6 +1,8 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import Http404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
+from django.contrib import messages
 from django.views.generic import (
 	ListView, 
 	DetailView, 
@@ -10,6 +12,7 @@ from django.views.generic import (
 )
 
 from .models import Post, Comment
+from .forms import PostForm
 
 
 # def home(request):
@@ -45,34 +48,95 @@ class PostDetailView(DetailView):
 	model = Post
 
 
-class PostCreateView(LoginRequiredMixin, CreateView):
-	model = Post
-	fields = ['title', 'content']
+def create_post(request):
+	form = PostForm
 
-	# Override default form_valid function to add author field
-	def form_valid(self, form):
-		# Author is set automatically to current user
-		form.instance.author = self.request.user
-		return super().form_valid(form)
+	try:
+		if request.user.groups.first().name == 'admin':
+			if request.method == 'POST':
+				form = PostForm(data=request.POST)
+				if form.is_valid():
+					new_post = form.save(commit=False)
+					new_post.author = request.user
+					new_post.save()
+					return redirect('/')
+	except:
+		messages.info(request, 'Sorry, you are not authorized to make blog posts.')
+		return redirect('/')
+	
+	context = {'form': form}
+	return render(request, 'blog/post_form.html', context)
 
 
-class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
-	model = Post
-	fields = ['title', 'content']
-	template_name = 'blog/post_form.html'
+# class PostCreateView(LoginRequiredMixin, CreateView):	
+# 	# if self.request.user.groups.first().name == 'admin':
+# 	model = Post
+# 	fields = ['title', 'content']
 
-	# Override default form_valid function to add author field
-	def form_valid(self, form):
-		# Author is set automatically to current user
-		form.instance.author = self.request.user
-		return super().form_valid(form)
+# 	# Override default form_valid function to add author field
+# 	def form_valid(self, form):
+# 		# Author is set automatically to current user
+# 		form.instance.author = self.request.user
+# 		return super().form_valid(form)
+# 	# else:
+# 	# 	raise Http404
 
-	def test_func(self):
-		# Get the current post
-		post = self.get_object()
-		if self.request.user == post.author:
-			return True
-		return False
+
+def update_post(request, pk):
+	post = get_object_or_404(Post, id=pk)
+
+	try:
+		if request.user.groups.first().name == 'admin':
+			if request.method == 'POST':
+				form = PostForm(data=request.POST, instance=post)
+				if form.is_valid():
+					updated_post = form.save(commit=False)
+					updated_post.author = request.user
+					updated_post.save()
+					return redirect('/')
+			else:
+				form = PostForm(instance=post)
+	except:
+		messages.info(request, 'Sorry, you are not authorized to make blog posts.')
+		return redirect('/')
+	
+	context = {'form': form}
+	return render(request, 'blog/post_form.html', context)
+
+
+# class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+# 	model = Post
+# 	fields = ['title', 'content']
+# 	template_name = 'blog/post_form.html'
+
+# 	# Override default form_valid function to add author field
+# 	def form_valid(self, form):
+# 		# Author is set automatically to current user
+# 		form.instance.author = self.request.user
+# 		return super().form_valid(form)
+
+# 	def test_func(self):
+# 		# Get the current post
+# 		post = self.get_object()
+# 		if self.request.user == post.author:
+# 			return True
+# 		return False
+
+
+def delete_post(request, pk):
+	post = get_object_or_404(Post, id=pk)
+
+	try:
+		if request.user.groups.first().name == 'admin':
+			if request.method == 'POST':
+				post.delete()
+				return redirect('/')
+	except:
+		messages.info(request, 'Sorry, you are not authorized to delete blog posts.')
+		return redirect('/')
+	
+	context = {'post': post}
+	return render(request, 'blog/post_confirm_delete.html', context)	
 
 
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):

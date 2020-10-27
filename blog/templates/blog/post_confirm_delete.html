@@ -8,12 +8,12 @@
 					{% csrf_token %}
 					<fieldset class="form-group">
 						
-						<h2>Are you sure you want to delete the post "{{ object.title }}"?</h2>
+						<h2>Are you sure you want to delete the post "{{ post.title }}"?</h2>
 						<p>This action cannot be undone.</p>
 					</fieldset>
 					<div class="form-group">
 						<button class="btn btn-outline-danger" type="submit">Yes, delete</button>
-						<a class="btn btn-outline-secondary" href="{% url 'post-detail' object.id %}">Cancel</a>
+						<a class="btn btn-outline-secondary" href="{% url 'post-detail' post.id %}">Cancel</a>
 					</div>
 				</form>
 			</div>
