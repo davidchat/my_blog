@@ -24,9 +24,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = config('MY_BLOG_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', 'practicalitybeatspurity.com', 'www.practicalitybeatspurity.com', 'localhost']
+ALLOWED_HOSTS = ['practicalitybeatspurity.com', 'www.practicalitybeatspurity.com', 'localhost']
 
 
 # Application definition
