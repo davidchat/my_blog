@@ -5,14 +5,15 @@
 
 {% block content %}
 	<h1 class="mb-3">Posts by {{ view.kwargs.username }} ({{ page_obj.paginator.count }})</h1>
-	{% for post in posts %}
 	<div class="container">
-		<div class="row mt-4">
-			<div class="col-lg-8 mx-auto">
-				<article class="mt-4">
+	{% for post in posts %}
+		<article class="mt-4">
+		<div class="row">
+			<div class="col-lg mx-auto">
+				<article class="">
 					<div class="row">
 					<div class="col-lg">
-					<div class="card card-body w-100">
+					<div class="card card-body">
 					<div class="media-body">
 					<div class="article-metadata">
 						<img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
@@ -51,7 +52,13 @@
 				</div>
 				</div>
 				</article>
+			</div>
+		</div>
+		</article>
 	{% endfor %}
+
+	<br />
+	
 	{% if is_paginated %}
 
 		{% if page_obj.has_previous %}
