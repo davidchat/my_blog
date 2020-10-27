@@ -1,4 +1,5 @@
 {% load static %}
+{% load auth_extras %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,7 +39,9 @@
 	        		<li class="nav-item mr-2">
 						<span class="navbar-text">Hello, {{ user.username }}!</span>
 					</li>
-					<a class="nav-item nav-link" href="{% url 'post-create' %}">New Post</a>
+					{% if user|has_group:'admin' %}
+						<a class="nav-item nav-link" href="{% url 'post-create' %}">New Post</a>
+					{% endif %}
 					<a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
 	        		<a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
 	        	{% else %}
