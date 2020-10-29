@@ -22,15 +22,20 @@
 	      							<a class="btn btn-outline-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' post.id %}">Update</a>
 	      							<a class="btn btn-outline-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' post.id %}">Delete</a>
 	      						</div>
-	      					{% endif %}
+					{% endif %}
+					<p></p>
 			    </div>
 				<div class="">
 				    <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
-				    <p class="article-content">{{ post.content|safe }}</p>
+					<p class="article-content">{{ post.content|safe|truncatewords:100 }}</p>
+					{% if post.content|wordcount > 100 %}
+						<a class="red-link" href="{% url 'post-detail' post.id %}">Continue reading</a>
+					{% endif %}
+					<p></p>
 				</div>
 					<div class="border-top pt-2 pb-2">
 		  </div>
-		  <div class="media-body">
+		  <!-- <div class="media-body">
 			    <h5>Comments</h5>
 			    {% if not post.comments.all %}
 			    	<small class="text-muted">No comments yet... <a class="red-link" href="{% url 'comment-create' post.id %}">Add a comment</a></small>
@@ -56,7 +61,7 @@
 			    	</div>
 			    	<small class="text-muted ml-2"><a class="red-link" href="{% url 'comment-create' post.id %}">Add a new comment</a></small>
 			    {% endif %}
-			</div>
+			</div> -->
 		  </div>
 		</div>
 		</div>
