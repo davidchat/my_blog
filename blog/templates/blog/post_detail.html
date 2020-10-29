@@ -5,59 +5,56 @@
 {% endblock title %}
 
 <div class="container">
-	<div class="row mt-4">
-		<div class="col-lg-8 mx-auto">
-			<article class="mt-4">
-				<div class="row">
-				<div class="col-lg">
+	<article class="mt-4 mb-4">
+		<div class="row">
+			<div class="col-lg-10 mx-auto">
 				<div class="card card-body">
 					<div class="media-body">
 						<div class="article-metadata">
 							<a href="{% url 'user-posts' post.author.username %}"><img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}"></a>
-						<a class="mr-2 red-link" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
-						<small class="text-muted">{{ post.date_posted|date:"F j, Y" }}</small>
-						{% if post.author == user %}
-										<div>
-											<a class="btn btn-outline-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' post.id %}">Update</a>
-											<a class="btn btn-outline-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' post.id %}">Delete</a>
-										</div>
-									{% endif %}
+							<a class="mr-2 red-link" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
+							<small class="text-muted">{{ post.date_posted|date:"F j, Y" }}</small>
+							{% if post.author == user %}
+								<div>
+									<a class="btn btn-outline-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' post.id %}">Update</a>
+									<a class="btn btn-outline-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' post.id %}">Delete</a>
+								</div>
+							{% endif %}
+							<p></p>
 						</div>
 						
 							<h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
 							<p class="article-content">{{ post.content|safe }}</p>
-							<div class="border-top pt-2 pb-2">
-				</div>
-				<div class="media-body">
+							<div class="border-top pt-2 pb-2"></div>
+					</div>
+					<div class="media-body">
 						<h5>Comments</h5>
 						{% if not post.comments.all %}
 							<small class="text-muted">No comments yet... <a class="red-link" href="{% url 'comment-create' post.id %}">Add a comment</a></small>
 						{% else %}
-							<div class="border-top border-bottom pt-2 pl-2 pr-2 pb-3 bg-light">
+						<div class="border-top border-bottom pt-2 pl-2 pr-2 pb-3 bg-light">
 							{% for comment in post.comments.all %}
-									<a class="red-link" href="{% url 'user-posts' comment.author.username %}">{{ comment.author }}</a>
-									<small class="text-muted">{{ comment.date_added|date:"F, j, Y: g:i" }}</small>
-									{% if comment.author == user %}
-										<div>
-											<a class="btn btn-outline-secondary btn-sm mt-1 mb-1" href="{% url 'comment-update' comment.id %}">Update</a>
-											<a class="btn btn-outline-danger btn-sm mt-1 mb-1" href="{% url 'comment-delete' comment.id %}">Delete</a>
-										</div>
-									{% endif %}
-									<br />
-									{{ comment.body|safe }}
-									{% if not forloop.last %}
-										<hr>
-									{% endif %}
+								<a class="red-link" href="{% url 'user-posts' comment.author.username %}">{{ comment.author }}</a>
+								<small class="text-muted">{{ comment.date_added|date:"F, j, Y: g:i" }}</small>
+								{% if comment.author == user %}
+									<div>
+										<a class="btn btn-outline-secondary btn-sm mt-1 mb-1" href="{% url 'comment-update' comment.id %}">Update</a>
+										<a class="btn btn-outline-danger btn-sm mt-1 mb-1" href="{% url 'comment-delete' comment.id %}">Delete</a>
+									</div>
+								{% endif %}
+								<br />
+								{{ comment.body|safe }}
+								{% if not forloop.last %}
+									<hr>
+								{% endif %}
 							{% endfor %}
-							</div>
-							<small class="text-muted ml-2"><a class="red-link" href="{% url 'comment-create' post.id %}">Add a new comment</a></small>
+						</div>
+						<small class="text-muted ml-2"><a class="red-link" href="{% url 'comment-create' post.id %}">Add a new comment</a></small>
 						{% endif %}
 					</div>
 				</div>
-				</div>
-				</div>
-			</article>
+			</div>
 		</div>
-	</div>
+	</article>
 </div>
 {% endblock content %}
