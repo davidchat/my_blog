@@ -152,7 +152,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-CKEDITOR_BASEPATH = '/static_root/ckeditor/ckeditor/'
+CKEDITOR_BASEPATH = '/static_root/ckeditor/'
 CKEDITOR_CONFIGS = {
     'default': {
        # 'toolbar_Full': [
