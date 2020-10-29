@@ -8,5 +8,5 @@ class PostForm(ModelForm):
     class Meta:
         model = Post
         fields = ['title', 'content']
-        widgets = {'text': forms.Textarea(attrs={'cols':80})}
+        widgets = {'content': forms.Textarea(attrs={'cols':80})}
 
