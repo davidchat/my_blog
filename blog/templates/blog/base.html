@@ -10,7 +10,9 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<!-- Local CSS stylesheet -->
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+	<!-- CKEditor code snippet highlighter -->
+	<link href="{% static 'ckeditor/ckeditor/plugins/codesnippet/lib/highlight/styles/default.css' %}" rel="stylesheet">
 
 	{% block title %} {% endblock %}
     <!-- {% if title %}
@@ -75,5 +77,7 @@
 	<!-- CKEditor JavaScript files -->
 	<script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
 	<script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+	<script src="{% static 'ckeditor/ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js' %}"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
 </body>
 </html>
