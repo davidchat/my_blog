@@ -162,7 +162,7 @@ CKEDITOR_CONFIGS = {
             ['TextColor', 'BGColor'],
             ['Smiley', 'SpecialChar'],
             ['NumberedList','BulletedList'],
-            ['CodeSnippet', 'Image', 'Youtube'],
+            ['Link', 'CodeSnippet', 'Image', 'Youtube'],
         ],
         'height': '100%',
         'width': '100%',
